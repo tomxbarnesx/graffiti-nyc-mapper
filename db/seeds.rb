@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Piece.create(title: "Marshmallow Man", lat: 40.706444, lng:-73.922721);
+Piece.create(title: "Muscly Liger", lat: 40.705891, lng:-73.922410);
