@@ -31,7 +31,7 @@
 <div id="message">Location saved</div>
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GMAPS_KEY']%>&callback=initMap"></script>
+<%#<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GMAPS_KEY']%>&callback=initMap"></script>%>
 <script>
     var map, infoWindow, marker, messagewindow;
 
@@ -103,7 +103,6 @@
     }
 })
 }
-
 
 function saveData() {
   var name = escape(document.getElementById('name').value);

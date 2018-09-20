@@ -12,9 +12,6 @@ class PiecesController < ApplicationController
             @lngArray.push(p.lng)
         end
         # ^^^
-
-        @lat = 40.706444
-        @lng = -73.922721
     end
 
     def new
@@ -23,7 +20,7 @@ class PiecesController < ApplicationController
 
     def create
         @piece = Piece.new(piece_params)
-
+        @piece.user_id = current_user.id
         if @piece.save
             render '/pieces/index'
         else
