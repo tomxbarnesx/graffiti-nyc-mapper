@@ -3,6 +3,29 @@
 <div id="map"></div>
 
 <div id="form">
+    <%= form_with model: Piece.new, remote:true do |form| %>
+        <div class="field">
+            <label>Lat: </label>
+            <%= form.number_field :lat, placeholder: "Lat", step: :any, :id => 'lat'%>
+        </div>
+        <div class="field">
+            <label>Lng: </label>
+            <%= form.number_field :lng, placeholder: "Lng", step: :any, :id => 'lng'%>
+        </div>
+        <div class="field">
+            <label>Title: </label>
+            <%= form.text_field :title, placeholder: "Piece title"%>
+        </div>
+        <div class="field">
+            <label>Address: </label>
+            <%= form.text_field :address, placeholder: "Address (optional)"%>
+        </div>
+        <div class="field">
+            <label>Type: </label>
+            <%= form.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil']) %>
+        </div>
+    <%= form.submit "Submit", :id=>'pieces'%>
+    <% end %>
 </div>
 
 <div id="message">Location saved</div>
@@ -66,6 +89,9 @@
 
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map, marker);
+            var latlng = marker.getPosition();
+            document.getElementById('lat').value = latlng.lat();
+            document.getElementById('lng').value = latlng.lng();
         });
 
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -77,6 +103,7 @@
     }
 })
 }
+
 
 function saveData() {
   var name = escape(document.getElementById('name').value);
