@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   root to: "pieces#index"
   
   resources :pieces
+  resources :users, only: [:show]
 end

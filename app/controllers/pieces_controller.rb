@@ -29,6 +29,7 @@ class PiecesController < ApplicationController
 
     end 
 
+private
     def piece_params
         params.require(:piece).permit(:title, :lat, :lng, :address, :marker_type)
     end
