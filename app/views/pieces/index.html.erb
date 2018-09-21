@@ -47,9 +47,22 @@
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
         }
-
+        <% puts "*********************" %>
+        <% puts @imgURLS %>
+        <% puts "*********************" %>
         for (let i = 0; i < <%=@plength%>; i++){
+            var contentString = '<div id="content">'+
+                '<div id="graffPhotoWrapper">' +
+                '<h1>IMAGEHERE</h1>' +
+                '</div>' +
+                '</div>';
+            var displayWindow = new google.maps.InfoWindow({
+                    content: contentString
+                  });
             var marker = new google.maps.Marker({position: {lat: <%=@latArray%>[i], lng: <%=@lngArray%>[i]}, map: map});
+            marker.addListener('click', function() {
+                displayWindow.open(map, marker);
+            });
         }
 
         infowindow = new google.maps.InfoWindow({

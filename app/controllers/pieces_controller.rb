@@ -6,10 +6,12 @@ class PiecesController < ApplicationController
         # revisit this workaround
         @latArray = []
         @lngArray = []
+        @imgURLs = []
 
         @pieces.each do |p| 
             @latArray.push(p.lat)
             @lngArray.push(p.lng)
+            @imgURLs.push(url_for(p.photo))
         end
         # ^^^
     end
