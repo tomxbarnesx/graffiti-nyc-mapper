@@ -21,6 +21,7 @@ class PiecesController < ApplicationController
     def create
         @piece = Piece.new(piece_params)
         @piece.user_id = current_user.id
+        
         if @piece.save
             render '/pieces/index'
         else
@@ -30,8 +31,9 @@ class PiecesController < ApplicationController
     end 
 
 private
+
     def piece_params
-        params.require(:piece).permit(:title, :lat, :lng, :address, :marker_type)
+        params.require(:piece).permit(:title, :lat, :lng, :address, :marker_type, :user_id, :photo)
     end
 
 end
