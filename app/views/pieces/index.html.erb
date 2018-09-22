@@ -60,7 +60,7 @@
         var contentStrings = [
             <% @pieces.each do |p|%>
                 {
-                    content: '<div class="displayContent"><div class="photoWrapper"> <%= image_tag p.photo, width: '350' %> </div></div>'
+                    content: '<div class="displayContent"><div class="photoWrapper"><%= image_tag p.photo, width: '350' %> </div><div class="photoDesc"><h3><%= p.title %></h3><p><strong>Photo By: </strong><%= p.user.username %><br><strong>Post date: </strong><%= p.post_date %></p></div></div>'
                 },
             <% end %>
         ]
@@ -68,7 +68,7 @@
         var allWindows = []
 
 
-        for (let i = 0; i < <%=@plength%>; i++){
+        for (let i = 0; i < markers.length; i++){
             var infowindow = new google.maps.InfoWindow(contentStrings[i]);
             allWindows.push(infowindow);
             var marker = new google.maps.Marker(markers[i]);
@@ -94,6 +94,7 @@
         
         var addToggle = false;
         var markerAdd;
+        var markerCounter = 0;
 
         document.getElementById("add-button").addEventListener("click", () => {
             if (addToggle == false) {
@@ -102,8 +103,12 @@
                 markerAdd = google.maps.event.addListener(map, 'click', function(event) {
                     marker = new google.maps.Marker({
                     position: event.latLng,
-                    map: map});
-        
+                    map: map,
+                    draggable:true});
+
+                    markerCounter++;
+                    console.log(markerCounter);
+
                     google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);
                         var latlng = marker.getPosition();
@@ -121,15 +126,20 @@
 
                     google.maps.event.addListener(map, "click", function(event) {
                         infowindow.close();
+                        markerCounter = 0;
                     });
-        });
+                google.maps.event.removeListener(markerAdd);}
+            );
             } else {
                 addToggle = false;
                 console.log(addToggle);
                 google.maps.event.removeListener(markerAdd);
+                marker.setMap(null);
             }
         })
 }
+
+<%# ******* CONSIDER DELETING ****** %>
 
 function saveData() {
   var name = escape(document.getElementById('name').value);
