@@ -47,23 +47,42 @@
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
         }
-        <% puts "*********************" %>
-        <% puts @imgURLS %>
-        <% puts "*********************" %>
+
+        var markers = [
+            <% @pieces.each do |p|%>
+                {
+                    position:{lat: <%= p.lat %> ,lng:<%= p.lng %>},
+                    map: map
+                },
+            <% end %>
+        ];
+
+        var contentStrings = [
+            <% @pieces.each do |p|%>
+                {
+                    content: '<div class="displayContent"><div class="photoWrapper"> <%= image_tag p.photo, width: '350' %> </div></div>'
+                },
+            <% end %>
+        ]
+
+        var allWindows = []
+
+
         for (let i = 0; i < <%=@plength%>; i++){
-            var contentString = '<div id="content">'+
-                '<div id="graffPhotoWrapper">' +
-                '<h1>IMAGEHERE</h1>' +
-                '</div>' +
-                '</div>';
-            var displayWindow = new google.maps.InfoWindow({
-                    content: contentString
-                  });
-            var marker = new google.maps.Marker({position: {lat: <%=@latArray%>[i], lng: <%=@lngArray%>[i]}, map: map});
+            var infowindow = new google.maps.InfoWindow(contentStrings[i]);
+            allWindows.push(infowindow);
+            var marker = new google.maps.Marker(markers[i]);
+            marker.infowindow = infowindow;
             marker.addListener('click', function() {
-                displayWindow.open(map, marker);
+                return this.infowindow.open(map, this);
             });
         }
+
+        google.maps.event.addListener(map, "click", function(event) {
+            for (var i = 0; i < allWindows.length; i++ ) {
+                allWindows[i].close();
+            }
+        });
 
         infowindow = new google.maps.InfoWindow({
             content: document.getElementById('form')
@@ -99,7 +118,11 @@
                                         'Error: Your browser doesn\'t support geolocation.');
                     infoWindow.open(map);
                         }
-                })
+
+                    google.maps.event.addListener(map, "click", function(event) {
+                        infowindow.close();
+                    });
+        });
             } else {
                 addToggle = false;
                 console.log(addToggle);
