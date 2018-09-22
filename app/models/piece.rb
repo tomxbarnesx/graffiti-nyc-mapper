@@ -7,9 +7,4 @@ class Piece < ApplicationRecord
           self.photo.attachment.service_url
         end
     end
-
-    def post_date
-        date = "#{created_at}"
-        return date.slice(0, 10)
-    end
 end
