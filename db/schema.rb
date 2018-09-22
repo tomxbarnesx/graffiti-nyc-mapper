@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_161900) do
+ActiveRecord::Schema.define(version: 2018_09_22_215643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2018_09_21_161900) do
     t.string "address"
     t.string "marker_type"
     t.integer "user_id"
+    t.string "artist"
   end
 
   create_table "users", force: :cascade do |t|

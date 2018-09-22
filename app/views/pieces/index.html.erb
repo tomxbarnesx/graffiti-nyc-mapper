@@ -60,7 +60,7 @@
         var contentStrings = [
             <% @pieces.each do |p|%>
                 {
-                    content: '<div class="displayContent"><div class="photoWrapper"> <%= image_tag p.photo, width: '350' %> </div></div>'
+                    content: '<div class="displayContent"><div class="photoWrapper"> <%= image_tag p.photo, width: '350' %> </div><div class="photoText"><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by:</strong><%=p.user.username%><br><strong>Post date</strong> <%=p.post_date%></div>'
                 },
             <% end %>
         ]
@@ -102,7 +102,8 @@
                 markerAdd = google.maps.event.addListener(map, 'click', function(event) {
                     marker = new google.maps.Marker({
                     position: event.latLng,
-                    map: map});
+                    map: map,
+                    draggable: true});
         
                     google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map, marker);

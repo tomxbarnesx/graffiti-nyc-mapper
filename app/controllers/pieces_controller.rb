@@ -2,18 +2,6 @@ class PiecesController < ApplicationController
     def index
         @pieces = Piece.all
         @plength = @pieces.length
-
-        # revisit this workaround
-        @latArray = []
-        @lngArray = []
-        @imgURLs = []
-
-        @pieces.each do |p| 
-            @latArray.push(p.lat)
-            @lngArray.push(p.lng)
-            @imgURLs.push(url_for(p.photo))
-        end
-        # ^^^
     end
 
     def new
@@ -35,7 +23,7 @@ class PiecesController < ApplicationController
 private
 
     def piece_params
-        params.require(:piece).permit(:title, :lat, :lng, :address, :marker_type, :user_id, :photo)
+        params.require(:piece).permit(:title, :lat, :lng, :address, :marker_type, :user_id, :photo, :artist)
     end
 
 end
