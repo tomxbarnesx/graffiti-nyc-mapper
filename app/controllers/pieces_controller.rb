@@ -13,8 +13,10 @@ class PiecesController < ApplicationController
         @piece.user_id = current_user.id
         
         if @piece.save
-            render '/pieces/index'
+            flash[:notice] = "Post successfully created"
+            redirect_to "/"
         else
+            flash[:error] = "We encountered an error creating your post."
             render 'new'
         end
 
@@ -24,6 +26,8 @@ class PiecesController < ApplicationController
         @piece = Piece.find(params[:id])
         @piece.destroy
         @piece.photo.purge
+        flash[:notice] = "Post successfully deleted"
+        redirect_to "/"
     end
 
 private

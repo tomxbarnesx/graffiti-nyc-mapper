@@ -27,5 +27,19 @@
         <label>Type: </label>
         <%= form.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil']) %>
     </div>
-    <%= form.submit "Submit", :id=>'pieces' %>
+    <%= form.submit "Submit", :id=>'pieces', onclick: "showLoad()" %>
 <% end %>
+<div class="spinner" style="display: none">
+  <div class="rect1"></div>
+  <div class="rect2"></div>
+  <div class="rect3"></div>
+  <div class="rect4"></div>
+  <div class="rect5"></div>
+</div>
+
+<script>
+    function showLoad() {
+        var spinner = document.getElementsByClassName('spinner')
+        spinner[0].style.display = "inline-block";
+    }
+</script>
