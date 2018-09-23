@@ -8,6 +8,10 @@ class PiecesController < ApplicationController
         @piece = Piece.new
     end
 
+    def edit
+        @piece = Piece.find(params[:id])
+    end
+
     def create
         @piece = Piece.new(piece_params)
         @piece.user_id = current_user.id
@@ -19,7 +23,17 @@ class PiecesController < ApplicationController
             flash[:error] = "We encountered an error creating your post."
             render 'new'
         end
+    end
 
+    def update
+        @piece = Piece.find(params[:id])
+
+        if @piece.update(piece_params)
+            flash[:notice] = "Post updated successfully"
+            redirect_to "/"
+        else
+            render 'edit'
+        end
     end
 
     def destroy

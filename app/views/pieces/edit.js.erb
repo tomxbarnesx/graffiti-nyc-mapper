@@ -1,0 +1,5 @@
+console.log("You made it");
+
+infoDiv = document.getElementById("display-<%=@piece.id%>")
+
+$(infoDiv).replaceWith("<%= j (render 'editform') %>");

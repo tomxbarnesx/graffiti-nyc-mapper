@@ -85,7 +85,7 @@
         var contentStrings = [
             <% @pieces.each do |p|%>
                 {   
-                    content: '<div class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="photo-gallery" data-max-width="850" data-max-height="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><%=p.user.username%><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" }, onclick: "removeMarker(counter)" %><% end %></div>'
+                    content: '<div id="display-<%= p.id %>" class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="photo-gallery" data-max-width="850" data-max-height="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><%=p.user.username%><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %><%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" } %><% end %></div>'
                 },
             <% end %>
         ]
