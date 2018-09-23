@@ -20,6 +20,12 @@ class PiecesController < ApplicationController
 
     end
 
+    def destroy
+        @piece = Piece.find(params[:id])
+        @piece.destroy
+        @piece.photo.purge
+    end
+
 private
 
     def piece_params

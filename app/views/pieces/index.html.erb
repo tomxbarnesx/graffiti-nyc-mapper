@@ -1,7 +1,22 @@
 <h1> NYC Graffiti Maps </h1>
+
 <% if current_user %>
     <button id="add-button">Add New Piece</button>
 <% end %>
+
+<div class="modal fade" id="enlargeImageModal" tabindex="-1" role="dialog" aria-labelledby="enlargeImageModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <img src="" class="enlargeImageModalSource" style="width: 100%;">
+        </div>
+      </div>
+    </div>
+</div>
+
 <div id="map"></div>
 
 <div id="form">
@@ -48,30 +63,41 @@
             handleLocationError(false, infoWindow, map.getCenter());
         }
 
+        var currentId = 0;
+        var uniqueId = function() {
+            return ++currentId;
+        }
+
+        <% counter = -1 %>
+
         var markers = [
             <% @pieces.each do |p|%>
                 {
+                    <% counter += 1  %>
+                    id: <%= counter %>,
                     position:{lat: <%= p.lat %> ,lng:<%= p.lng %>},
                     map: map
                 },
             <% end %>
         ];
+        console.log(markers)
 
         var contentStrings = [
             <% @pieces.each do |p|%>
-                {
-                    content: '<div class="displayContent"><div class="photoWrapper"> <%= image_tag p.photo, width: '350' %> </div><div class="photoText"><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by:</strong><%=p.user.username%><br><strong>Post date</strong> <%=p.post_date%></div>'
+                {   
+                    content: '<div class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="photo-gallery" data-max-width="850" data-max-height="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><%=p.user.username%><br><strong>Post date: </strong> <%=p.post_date%></div><%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" }, onclick: "removeMarker(counter)" %></div>'
                 },
             <% end %>
         ]
 
-        var allWindows = []
-
+        var allWindows = [];
+        var markerStack = [];
 
         for (let i = 0; i < <%=@plength%>; i++){
             var infowindow = new google.maps.InfoWindow(contentStrings[i]);
             allWindows.push(infowindow);
             var marker = new google.maps.Marker(markers[i]);
+            markerStack.push(marker);
             marker.infowindow = infowindow;
             marker.addListener('click', function() {
                 return this.infowindow.open(map, this);
@@ -82,6 +108,13 @@
             for (var i = 0; i < allWindows.length; i++ ) {
                 allWindows[i].close();
             }
+        });
+
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+                    wrapping: false,
+            })
         });
 
         infowindow = new google.maps.InfoWindow({
@@ -123,6 +156,7 @@
                     google.maps.event.addListener(map, "click", function(event) {
                         infowindow.close();
                     });
+                    google.maps.event.removeListener(markerAdd);
         });
             } else {
                 addToggle = false;
