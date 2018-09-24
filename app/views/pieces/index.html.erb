@@ -17,6 +17,7 @@
     </div>
 </div>
 
+<input id="pac-input" class="controls" type="text" placeholder="Search address">
 <div id="map"></div>
 
 <div id="form">
@@ -26,7 +27,7 @@
 <div id="message">Location saved</div>
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GMAPS_KEY']%>&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GMAPS_KEY']%>&libraries=places&callback=initMap"></script>
 <script>
     var map, infoWindow, marker, messagewindow;
 
@@ -63,10 +64,70 @@
             handleLocationError(false, infoWindow, map.getCenter());
         }
 
+        //START AUTOCOMPLETE
+
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var searchMarkers = []
+
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          searchMarkers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          searchMarkers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            searchMarkers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+        //END AUTOCOMPLETE
+
         var currentId = 0;
         var uniqueId = function() {
             return ++currentId;
         }
+        
 
         <% counter = -1 %>
 
@@ -85,7 +146,7 @@
         var contentStrings = [
             <% @pieces.each do |p|%>
                 {   
-                    content: '<div id="display-<%= p.id %>" class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="photo-gallery" data-max-width="850" data-max-height="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><%=p.user.username%><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %><%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" } %><% end %></div>'
+                    content: '<div class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="photo-gallery" data-max-width="850" data-max-height="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><%=p.user.username%><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user %><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %><%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" } %><% else %><% end %><% end %></div>'
                 },
             <% end %>
         ]
@@ -132,6 +193,7 @@
             if (addToggle == false) {
                 addToggle = true;
                 console.log(addToggle);
+                var geocoder = new google.maps.Geocoder;
                 markerAdd = google.maps.event.addListener(map, 'click', function(event) {
                     marker = new google.maps.Marker({
                     position: event.latLng,
@@ -143,6 +205,21 @@
                         var latlng = marker.getPosition();
                         document.getElementById('lat').value = latlng.lat();
                         document.getElementById('lng').value = latlng.lng();
+
+                        var geoLatLng = {lat: parseFloat(latlng.lat()), lng: parseFloat(latlng.lng())};
+                        geocoder.geocode({'location': geoLatLng}, function(results, status) {
+                            if (status === 'OK') {
+                                 if (results[0]) {
+                                    document.getElementById('address').value = results[0].formatted_address
+                                } else {
+                                    window.alert('No address results found. Feel free to fill in yourself or leave as "N/A"');
+                                    document.getElementById('address').value = "N/A";
+                                }
+                            } else {
+                                window.alert('Geocoder failed due to: ' + status);
+                                document.getElementById('address').value = "N/A";
+                            }
+                        });
                     });
         
                     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -157,13 +234,37 @@
                         infowindow.close();
                     });
                     google.maps.event.removeListener(markerAdd);
-        });
+                });
             } else {
                 addToggle = false;
                 console.log(addToggle);
+                marker.setMap(null);
                 google.maps.event.removeListener(markerAdd);
             }
         })
+}
+
+function geocodeLatLng(geocoder, map, infowindow) {
+    var input = document.getElementById('latlng').value;
+    var latlngStr = input.split(',', 2);
+    var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+    geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === 'OK') {
+        if (results[0]) {
+            map.setZoom(11);
+            var marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+            });
+            infowindow.setContent(results[0].formatted_address);
+            infowindow.open(map, marker);
+        } else {
+            window.alert('No results found');
+        }
+        } else {
+        window.alert('Geocoder failed due to: ' + status);
+        }
+    });
 }
 
 function saveData() {
