@@ -2,17 +2,15 @@
     <div class="card" class="col-sm-4" style="width: 18rem;">
         <img class="card-img-top" src="<% if @user.avatar.attached? %><%=p.photo_url%><% else %>https://www.shareicon.net/data/256x256/2015/12/21/690925_safety_512x512.png<% end %>" alt="User image">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title">@<%=@user.username%></h5>
+            <p class="card-text"><%=@user.bio%></p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item"><strong>Email:</strong> <%=@user.email%></li>
+            <li class="list-group-item"><strong>DOB:</strong> <%=@user.birthdate%></li>
         </ul>
         <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+            <%= link_to 'Edit Profile', edit_user_registration_path(@user), :class => "card-link" %>
         </div>
     </div>
     <div class="row justify-content-center col-md-8">
