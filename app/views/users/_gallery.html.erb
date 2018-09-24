@@ -1,0 +1,19 @@
+<div class="row">
+    <% @user.pieces.each_with_index do |p, index| %>
+        <a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="user-<%=@user.id%>-gallery" data-type="image" class="col-sm-4">
+            <%= image_tag p.photo, options = {width: "300", class: "image-fluid"} %>
+        </a>
+        <% if (index + 1) % 3 == 0 %>
+            </div>
+            <div class="row">
+        <% end %>
+    <% end %>
+</div>
+
+<script>
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox({
+            })
+        });
+</script>
