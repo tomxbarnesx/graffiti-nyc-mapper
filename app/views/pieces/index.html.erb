@@ -1,16 +1,12 @@
-<% if current_user %>
-    <button id="add-button">Add New Piece</button>
-<% end %>
-
-<input id="pac-input" class="controls" type="text" placeholder="Search address">
 <div id="map"></div>
+
+<input id="address-input" class="form-control w-50 mt-2" type="text" placeholder="Search address">
 
 <div id="form">
     <%= render "form" %>
 </div>
 
 <div id="message">Location saved</div>
-
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GMAPS_KEY']%>&libraries=places&callback=initMap"></script>
 <script>
@@ -51,7 +47,7 @@
 
         //START AUTOCOMPLETE
 
-        var input = document.getElementById('pac-input');
+        var input = document.getElementById('address-input');
         var searchBox = new google.maps.places.SearchBox(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
@@ -177,6 +173,7 @@
         document.getElementById("add-button").addEventListener("click", () => {
             if (addToggle == false) {
                 addToggle = true;
+                document.getElementById("add-button").innerText = "Add Mode: On"
                 console.log(addToggle);
                 var geocoder = new google.maps.Geocoder;
                 markerAdd = google.maps.event.addListener(map, 'click', function(event) {
@@ -222,6 +219,7 @@
                 });
             } else {
                 addToggle = false;
+                document.getElementById("add-button").innerText = "Add Mode: Off"
                 console.log(addToggle);
                 marker.setMap(null);
                 google.maps.event.removeListener(markerAdd);
