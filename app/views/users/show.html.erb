@@ -1,4 +1,5 @@
 <div class="row justify-content-center">
+    <div class="row justify-content-center col-md-8">
     <div class="card" class="col-sm-4" style="width: 18rem;">
         <img class="card-img-top" src="<% if @user.avatar.attached? %><%=p.photo_url%><% else %>https://www.shareicon.net/data/256x256/2015/12/21/690925_safety_512x512.png<% end %>" alt="User image">
         <div class="card-body">
@@ -13,7 +14,5 @@
             <%= link_to 'Edit Profile', edit_user_registration_path(@user), :class => "card-link" %>
         </div>
     </div>
-    <div class="row justify-content-center col-md-8">
         <%= render "gallery" %>
-    </div>
 </div>
