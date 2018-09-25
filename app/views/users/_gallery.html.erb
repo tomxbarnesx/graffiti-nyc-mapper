@@ -1,8 +1,8 @@
 <div class="card-columns">
     <% @user.pieces.each_with_index do |p, index| %>
-        <a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="user-<%=@user.id%>-gallery" data-type="image" class="col-sm-4">
+        <a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="user-<%=@user.id%>-gallery" data-type="image">
             <div class="card">
-            <%= image_tag p.photo, options = {width: "300", class: "image-fluid"} %>
+            <%= image_tag p.photo, options = {width: "100%", class: "image-fluid"} %>
             </div>
         </a>
     <% end %>
