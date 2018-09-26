@@ -26,7 +26,6 @@
             zoom: 15
         });
         infoWindow = new google.maps.InfoWindow;
-        autoLoco = []
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -34,20 +33,6 @@
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
-            var icon = {
-              url: icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            autoLoco.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              position: pos
-            }));
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
@@ -189,7 +174,7 @@
         document.getElementById("add-button").addEventListener("click", () => {
             if (addToggle == false) {
                 addToggle = true;
-                document.getElementById("add-button").innerText = "Add Mode: On"
+                document.getElementById("add-button").innerText = "Add Mode - On"
                 console.log(addToggle);
                 var geocoder = new google.maps.Geocoder;
                 markerAdd = google.maps.event.addListener(map, 'click', function(event) {
@@ -236,7 +221,7 @@
                 });
             } else {
                 addToggle = false;
-                document.getElementById("add-button").innerText = "Add Mode: Off"
+                document.getElementById("add-button").innerText = "Add Mode - Off"
                 console.log(addToggle);
                 marker.setMap(null);
                 google.maps.event.removeListener(markerAdd);
