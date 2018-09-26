@@ -3,7 +3,7 @@
         <div class="mt-4 avatar-container" style="margin-bottom: 1.5em; margin-right: 2em; width: 15.6em">
             <% if current_user && current_user.id == @user.id %>
               <a data-toggle="modal" href="#avatarModal" id="avatar-modal">
-              <div class="floater">+</div>
+              <div class="floater">✎</div>
             <% end %>
             <img class="card-img-top rounded-circle" src="<% if @user.avatar.attached? %><%=@user.avatar_url%><% else %>https://www.shareicon.net/data/256x256/2015/12/21/690925_safety_512x512.png<% end %>" alt="User image" width="250" height="250" style="object-fit: cover">
             <% if current_user && current_user.id == @user.id %>
@@ -29,7 +29,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>Change Avatar</h4>
+        <h4>Update Avatar</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

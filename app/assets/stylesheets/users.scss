@@ -7,12 +7,16 @@
     flex-direction: row;
 }
 
+#avatar-modal {
+    transition: .5s ease;
+}
+
 #avatar-modal:hover {
     opacity: 0.7;
 }
 
 #avatar-modal:hover .floater {
-    visibility: visible;
+    opacity: 1;
 }
 
 .avatar-container {
@@ -21,10 +25,11 @@
 
 .floater {
     position: absolute;
+    transition: .5s ease;
+    opacity: 0;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    visibility: hidden;
     color: black;
     font-size: 400%;
 }
