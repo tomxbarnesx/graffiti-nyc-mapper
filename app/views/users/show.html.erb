@@ -1,11 +1,20 @@
 <div class="container justify-content-md-center pl-5">
     <div class="row">
-        <div class="col-sm-3 mt-4" style="margin-bottom: 1.5em">
-            <a data-toggle="modal" href="#avatarModal">
-            <img class="card-img-top rounded-circle" src="<% if @user.avatar.attached? %><%=p.photo_url%><% else %>https://www.shareicon.net/data/256x256/2015/12/21/690925_safety_512x512.png<% end %>" alt="User image"></a>
+        <div class="mt-4 avatar-container" style="margin-bottom: 1.5em; margin-right: 2em; width: 15.6em">
+            <% if current_user && current_user.id == @user.id %>
+              <a data-toggle="modal" href="#avatarModal" id="avatar-modal">
+              <div class="floater">+</div>
+            <% end %>
+            <img class="card-img-top rounded-circle" src="<% if @user.avatar.attached? %><%=@user.avatar_url%><% else %>https://www.shareicon.net/data/256x256/2015/12/21/690925_safety_512x512.png<% end %>" alt="User image" width="250" height="250" style="object-fit: cover">
+            <% if current_user && current_user.id == @user.id %>
+              </a>
+            <% end %>
         </div>
         <div class="col-sm-7 mt-5">
-            <h1><%=@user.username%> <%= link_to 'Edit Profile', edit_user_registration_path(@user), :class => "btn btn-outline-secondary ml-3 mb-2"%></h1>
+            <h1><%=@user.username%> 
+              <% if current_user && current_user.id == @user.id %>
+                <%= link_to 'Edit Profile', edit_user_registration_path(@user), :class => "btn btn-outline-secondary ml-3 mb-2"%></h1>
+              <% end %>
             <h5 class="my-4"><strong><%=@user.pieces.length%></strong> posts <span class="ml-4"><strong>0</strong> likes</span></h5>
             <p><strong><%=@user.first_name%> <%=@user.last_name%></strong><br>
             <%=@user.bio%></p>
@@ -20,13 +29,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <h4>Change Avatar</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body container justify-content-md-center">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <%= form_for @user do |form| %>
+            <div class="form-group">
+              <%= form.file_field :avatar, class: "form-control-file" %>
+            </div>
+          <%= form.submit "Submit", class: "btn btn-dark mt-2" %>
+        <% end %>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@ class Piece < ApplicationRecord
 
     def photo_url
         if self.photo.attachment
-          self.photo.attachment.service_url
+            self.photo.attachment.service_url
         end
     end
 
