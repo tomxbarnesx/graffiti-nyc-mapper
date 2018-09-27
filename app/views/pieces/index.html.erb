@@ -2,8 +2,10 @@
 
 <input id="address-input" class="form-control w-50 mt-2" type="text" placeholder="Search address">
 
-<div id="form" style="display:none">
-    <%= render "form" %>
+<div id="form-container" style="display:none">
+    <div id="form">
+        <%= render "form" %>
+    </div>
 </div>
 
 <div id="message">Location saved</div>
@@ -159,6 +161,7 @@
         });
         
         var addToggle = false;
+        var toggleCount = 0;
         var markerAdd;
 
         <% if current_user %>
@@ -176,8 +179,7 @@
                     draggable: true});
         
                     google.maps.event.addListener(newMarker, 'click', function() {
-                        console.log(document.getElementById('form'))
-                        document.getElementById('form').style.display = "block";
+                        console.log(document.getElementById('form'));
                         infowindow.open(map, newMarker);
                         var latlng = newMarker.getPosition();
                         document.getElementById('lat').value = latlng.lat();
@@ -214,7 +216,6 @@
                 });
             } else {
                 addToggle = false;
-                document.getElementById('form').style.display = "none";
                 document.getElementById("add-button").innerText = "Add Mode - Off";
                 console.log(addToggle);
                 newMarker.setMap(null);
