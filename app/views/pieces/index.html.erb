@@ -12,14 +12,6 @@
 <script>
     var map, infoWindow, marker, messagewindow;
 
-    function createMarker(coords, map, title){
-        marker = new google.maps.Marker({
-            position: coords,
-            map: map,
-            title: title
-        });
-    }
-
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 40.706684, lng: -73.923059},
@@ -65,8 +57,8 @@
           }
 
           // Clear out the old markers.
-          searchMarkers.forEach(function(marker) {
-            marker.setMap(null);
+          searchMarkers.forEach(function(mark) {
+            mark.setMap(null);
           });
           searchMarkers = [];
 
@@ -112,7 +104,7 @@
 
         <% counter = -1 %>
 
-        var markers = [
+        var galleryMarkers = [
             <% @pieces.each do |p|%>
                 {
                     <% counter += 1  %>
@@ -122,12 +114,11 @@
                 },
             <% end %>
         ];
-        console.log(markers)
 
         var contentStrings = [
             <% @pieces.each do |p|%>
                 {   
-                    content: '<div id="display-<%=p.id%>" class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="photo-gallery" data-max-width="850" data-max-height="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><a href="/users/<%=p.user.id%>"><%=p.user.username%></a><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user %><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %> • <%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" } %><% else %><% end %><% end %></div>'
+                    content: '<div id="display-<%=p.id%>" class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h3><%=p.title%></h3><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><a href="/users/<%=p.user.id%>"><%=p.user.username%></a><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user %><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %> • <%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" } %><% else %><% end %><% end %></div>'
                 },
             <% end %>
         ]
@@ -138,10 +129,10 @@
         for (let i = 0; i < <%=@plength%>; i++){
             var infowindow = new google.maps.InfoWindow(contentStrings[i]);
             allWindows.push(infowindow);
-            var marker = new google.maps.Marker(markers[i]);
-            markerStack.push(marker);
-            marker.infowindow = infowindow;
-            marker.addListener('click', function() {
+            var galMarker = new google.maps.Marker(galleryMarkers[i]);
+            markerStack.push(galMarker);
+            galMarker.infowindow = infowindow;
+            galMarker.addListener('click', function() {
                 return this.infowindow.open(map, this);
             });
         }
@@ -160,7 +151,7 @@
         });
 
         infowindow = new google.maps.InfoWindow({
-            content: document.getElementById('form')
+                    content: document.getElementById('form')
         });
 
         messagewindow = new google.maps.InfoWindow({
@@ -174,19 +165,21 @@
         document.getElementById("add-button").addEventListener("click", () => {
             if (addToggle == false) {
                 addToggle = true;
+
                 document.getElementById("add-button").innerText = "Add Mode - On"
                 console.log(addToggle);
                 var geocoder = new google.maps.Geocoder;
                 markerAdd = google.maps.event.addListener(map, 'click', function(event) {
-                    marker = new google.maps.Marker({
+                    newMarker = new google.maps.Marker({
                     position: event.latLng,
                     map: map,
                     draggable: true});
         
-                    google.maps.event.addListener(marker, 'click', function() {
+                    google.maps.event.addListener(newMarker, 'click', function() {
+                        console.log(document.getElementById('form'))
                         document.getElementById('form').style.display = "block";
-                        infowindow.open(map, marker);
-                        var latlng = marker.getPosition();
+                        infowindow.open(map, newMarker);
+                        var latlng = newMarker.getPosition();
                         document.getElementById('lat').value = latlng.lat();
                         document.getElementById('lng').value = latlng.lng();
 
@@ -221,9 +214,10 @@
                 });
             } else {
                 addToggle = false;
-                document.getElementById("add-button").innerText = "Add Mode - Off"
+                document.getElementById('form').style.display = "none";
+                document.getElementById("add-button").innerText = "Add Mode - Off";
                 console.log(addToggle);
-                marker.setMap(null);
+                newMarker.setMap(null);
                 google.maps.event.removeListener(markerAdd);
             }
         })
@@ -238,12 +232,12 @@ function geocodeLatLng(geocoder, map, infowindow) {
         if (status === 'OK') {
         if (results[0]) {
             map.setZoom(11);
-            var marker = new google.maps.Marker({
+            var geoSetMarker = new google.maps.Marker({
             position: latlng,
             map: map
             });
             infowindow.setContent(results[0].formatted_address);
-            infowindow.open(map, marker);
+            infowindow.open(map, geoSetMarker);
         } else {
             window.alert('No results found');
         }
