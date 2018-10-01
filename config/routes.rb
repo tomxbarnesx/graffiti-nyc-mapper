@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   
   resources :pieces
   resources :users, only: [:show, :edit, :update]
+
+  get '/about' => 'pages#about'
 end

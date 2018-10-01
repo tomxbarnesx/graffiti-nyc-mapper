@@ -1,0 +1,21 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#about-view {
+    background-image: url("https://images.unsplash.com/photo-1507306681221-aa9ccb9d1c18?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e6dc6ce5d64d871d6ab369803c5aafeb&auto=format&fit=crop&w=2850&q=80");
+    background-size: 100% auto;
+    height: 50em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-card {
+    z-index: 10;
+    width: 40em;
+    background-color: white;
+    margin-top: -50em;
+    padding: 3em;
+    border-radius: 1em;
+}
