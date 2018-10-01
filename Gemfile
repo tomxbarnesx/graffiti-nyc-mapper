@@ -66,3 +66,4 @@ gem 'jquery-rails'
 gem 'bootstrap', '~> 4.1.3'
 gem 'devise'
 gem "aws-sdk-s3", require: false
+gem 'popper_js'

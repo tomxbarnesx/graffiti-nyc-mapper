@@ -14,7 +14,7 @@
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/"><%= image_tag "taglogoclean.png", width: "130px" %></a>
         <% if current_user %>
-          <button class="btn btn-outline-warning" id="add-button">Add Mode - Off</button>
+          <button class="btn btn-outline-warning" id="add-button" data-toggle="tooltip" data-placement="bottom" title="Toggle add mode and click to drop a marker. Drag to adjust positioning.">Add Mode - Off</button>
         <% end %>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
