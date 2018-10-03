@@ -1,33 +1,34 @@
+<h2>Add new piece</h2>
 <%= form_with model: Piece.new, remote:true do |form| %>
-    <div class="field">
+    <div class="form-group">
         <label>Lat: </label>
-        <%= form.number_field :lat, placeholder: "Lat", step: :any, :id => 'lat'%>
+        <%= form.number_field :lat, placeholder: "Lat", step: :any, :id => 'lat', class: "form-control form-control-sm"%>
     </div>
-    <div class="field">
+    <div class="form-group">
         <label>Lng: </label>
-        <%= form.number_field :lng, placeholder: "Lng", step: :any, :id => 'lng'%>
+        <%= form.number_field :lng, placeholder: "Lng", step: :any, :id => 'lng', class: "form-control form-control-sm"%>
     </div>
-    <div class="field">
-        <label>Title: </label>
-        <%= form.text_field :title, placeholder: "Piece title"%>
-    </div>
-    <div class="field">
-        <label>Artist: </label>
-        <%= form.text_field :artist, placeholder: "Artist"%>
-    </div>
-    <div class="field">
+    <div class="form-group">
         <label>Address: </label>
-        <%= form.text_field :address, placeholder: "Address", :id => 'address'%>
+        <%= form.text_field :address, placeholder: "Address", :id => 'address', class: "form-control form-control-sm"%>
     </div>
-    <div class="field">
+    <div class="form-group">
+        <label>Title: </label>
+        <%= form.text_field :title, placeholder: "Piece title", class: "form-control form-control-sm"%>
+    </div>
+    <div class="form-group">
+        <label>Artist: </label>
+        <%= form.text_field :artist, placeholder: "Artist", class: "form-control form-control-sm"%>
+    </div>
+    <div class="form-group">
+        <label>Type: </label>
+        <%= form.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil'], {}, {class: "form-control form-control-sm"}) %>
+    </div>
+    <div class="form-group">
         <label>Attach Photo: </label>
         <%= form.file_field :photo %>
     </div>
-    <div class="field">
-        <label>Type: </label>
-        <%= form.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil']) %>
-    </div>
-    <%= form.submit "Submit", :id=>'pieces', onclick: "showLoad()" %>
+    <%= form.submit "Submit", :id=>'pieces', onclick: "showLoad()", class: "btn btn-dark" %>
 <% end %>
 <div class="spinner" style="display: none">
   <div class="rect1"></div>

@@ -1,19 +1,19 @@
 <%= form_for @piece do |f|%>
-    <div class="field">
+    <div class="form-group">
         <label>Title:</label>
-        <%= f.text_field :title %>
+        <%= f.text_field :title, class: "form-control form-control-sm" %>
     </div>
-    <div class="field">
+    <div class="form-group">
         <label>Address: </label>
-        <%= f.text_field :address %>
+        <%= f.text_field :address, class: "form-control form-control-sm" %>
     </div>
-    <div class="field">
+    <div class="form-group">
         <label>Photo: </label>
-        <%= f.file_field :photo %>
+        <%= f.file_field :photo, class: "form-control form-control-sm" %>
     </div>
-    <div class="field">
+    <div class="form-group">
         <label>Type: </label>
-        <%= f.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil']) %>
+        <%= f.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil'], {}, {class: "form-control form-control-sm"}) %>
     </div>
     <%= f.button :Submit, onclick: "showLoad()" %>
 <% end %>
