@@ -1,9 +1,14 @@
 <div id="about-view">
-    <div class="jumbotron">
+    <div class="jumbotron about-card">
         <h1 class="display-4">About</h1>
-        <p class="lead">Paint the town, and record it for the world to see.</p>
+        <p class="lead">Perserving history when no one else will.</p>
         <hr class="my-4">
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <p><strong>Note:</strong> You can only add new pieces to the map if you have account. We'll only ask for your email address and will never share your info with any one, under any circumstances. Anyonymity is key.</p>
+        <% if !current_user %>
+        <%= link_to("Sign Up", new_user_registration_path, {:class => "btn btn-outline-dark"})%>
+        <%= link_to("Log In", new_user_session_path, {:class => "btn btn-outline-dark"})%>
+        <% end %>
     </div>
 </div>

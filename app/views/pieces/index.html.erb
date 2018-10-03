@@ -8,12 +8,38 @@
     </div>
 </div>
 
+<div class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <%= image_tag "taglogoclean.png", width: "130px" %>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body px-3">
+        Welcome to TAG NYC, a graffiti mapping project focused on documenting the ever-evolving graffiti culture in the Five Boroughs. <br><br>
+        Sign up to add new markers to the map or add a new panel to a gallery when a piece changes. Any information you provide will never be shared with anyone, for any reason. Anonymity is key.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="message">Location saved</div>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GMAPS_KEY']%>&libraries=places&callback=initMap"></script>
 <script>
     var map, infoWindow, marker, messagewindow;
 
+    <% if !current_user %>
+    $(window).on('load',function(){
+        $('#welcomeModal').modal('show');
+    });
+    <% end %>
+    
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 40.706684, lng: -73.923059},
@@ -260,7 +286,6 @@ document.addEventListener("turbolinks:load", () => {
   })
 
 $(function () {
-    console.log('noted');
   $('[data-toggle="tooltip"]').tooltip()
 })
 </script>

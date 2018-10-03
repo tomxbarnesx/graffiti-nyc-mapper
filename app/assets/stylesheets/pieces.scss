@@ -25,6 +25,16 @@
   }
 }
 
+@media (min-width: 992px) {
+  #map {
+    height: 46em;
+  }
+
+  #the-view {
+    height: 65em;
+  }
+}
+
 a.navbar-brand {
   padding: 0em;
 }
