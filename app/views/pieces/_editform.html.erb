@@ -1,21 +1,22 @@
+<h2>Edit piece</h2>
 <%= form_for @piece do |f|%>
     <div class="form-group">
         <label>Title:</label>
         <%= f.text_field :title, class: "form-control form-control-sm" %>
     </div>
     <div class="form-group">
-        <label>Address: </label>
-        <%= f.text_field :address, class: "form-control form-control-sm" %>
-    </div>
-    <div class="form-group">
-        <label>Photo: </label>
-        <%= f.file_field :photo, class: "form-control form-control-sm" %>
+        <label>Artist: </label>
+        <%= f.text_field :artist, class: "form-control form-control-sm" %>
     </div>
     <div class="form-group">
         <label>Type: </label>
         <%= f.select(:marker_type, ['Mural','Tag','Heaven','Paste-Up', 'Stencil'], {}, {class: "form-control form-control-sm"}) %>
     </div>
-    <%= f.button :Submit, onclick: "showLoad()" %>
+    <div class="form-group">
+        <label>Photo: </label><br>
+        <%= f.file_field :photo %>
+    </div>
+    <%= f.button :Submit, onclick: "showLoad()", class: "btn btn-dark" %>
 <% end %>
 <div class="spinner" style="display: none">
   <div class="rect1"></div>
