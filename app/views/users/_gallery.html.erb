@@ -1,7 +1,7 @@
 <div class="card-columns">
     <% @user.pieces.each_with_index do |p, index| %>
         <div class="gal-img-wrapper">
-        <button class="btn gal-info" data-toggle="tooltip" data-placement="top" data-html="true" title="<strong>Artist: </strong><%=p.artist%><br><strong>Address: </strong><%=p.address%>"><strong>i</strong></button>
+        <a tabindex="0" class="btn btn-light btn-sm gal-info" role="button" data-placement="top" data-toggle="popover" data-html="true" data-trigger="focus" data-content="<strong>Artist: </strong><%=p.artist%><br><strong>Address: </strong><%=p.address%>"><strong>i</strong></a>
             <a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-gallery="user-<%=@user.id%>-gallery" data-type="image">
                 <div class="card">
                 <%= image_tag p.photo, options = {width: "100%", class: "image-fluid"} %>
@@ -20,5 +20,13 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
+})
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+$('.popover-dismiss').popover({
+  trigger: 'focus'
 })
 </script>
