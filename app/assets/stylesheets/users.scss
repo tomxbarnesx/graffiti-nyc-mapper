@@ -33,3 +33,14 @@
     color: black;
     font-size: 400%;
 }
+
+.gal-img-wrapper {
+    position: relative;
+}
+
+.gal-info {
+    position: absolute;
+    top: -2%;
+    right: -2%;
+    z-index: 10;
+}
