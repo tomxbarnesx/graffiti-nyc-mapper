@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TAG*NYC</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <div id="the-edit-view">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/"><%= image_tag "taglogoclean.png", width: "130px" %></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link ml-2" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Neighborhoods</a>
+            </li>
+          </ul>
+        <% if current_user %>
+          <div class="nav-item my-2 my-sm-0"><%= link_to('Profile', user_path(current_user.id), {:class => "nav-link white-no-link"}) %></div>
+          <div class="nav-item my-2 my-sm-0"><%= link_to('Logout', destroy_user_session_path, method: :delete, :class => "nav-link white-no-link") %></div>
+        <% else %>
+          <div class="nav-item my-2 my-sm-0"><%= link_to("Sign Up", new_user_registration_path, {:class => "nav-link white-no-link"})%></div>
+          <div class="nav-item my-2 my-sm-0"><%= link_to("Log In", new_user_session_path, {:class => "nav-link white-no-link"})%></div>
+        <% end %>
+        </div>
+      </nav>
+      <p id="notice" class="notice alert-success"><%= notice %></p>
+      <p id="alert" class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
+  </body>
+</html>

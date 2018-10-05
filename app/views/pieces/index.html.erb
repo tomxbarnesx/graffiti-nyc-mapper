@@ -47,6 +47,14 @@
         });
         infoWindow = new google.maps.InfoWindow;
 
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
@@ -58,8 +66,6 @@
             infoWindow.setContent('Location found.');
             infoWindow.open(map);
             map.setCenter(pos);
-            }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
             });
         } else {
             handleLocationError(false, infoWindow, map.getCenter());
@@ -146,7 +152,7 @@
         var contentStrings = [
             <% @pieces.each do |p|%>
                 {   
-                    content: '<div id="display-<%=p.id%>" class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h2><%=p.title%></h2><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><a href="/users/<%=p.user.id%>"><%=p.user.username%></a><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user %><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %> • <%= link_to "Destroy", piece_path(p), method: :delete, remote:true, data: { confirm: "Are you sure?" } %><% else %><% end %><% end %></div>'
+                    content: '<div id="display-<%=p.id%>" class="displayContent"><div class="photoWrapper"><a href="<%=p.photo_url%>" data-toggle="lightbox" data-height="850" data-width="1400" data-type="image"><%= image_tag p.photo, options = {width: "350", class: "image-fluid"} %></a></div><div class="photoText"><h2><%=p.title%></h2><p><strong>Artist: </strong><%=p.artist%><br><strong>Photo by: </strong><a href="/users/<%=p.user.id%>"><%=p.user.username%></a><br><strong>Post date: </strong> <%=p.post_date%></div><% if current_user %><% if current_user.id == p.user.id || current_user.is_admin == true %><%= link_to "Edit", edit_piece_path(p), remote:true %> • <%= link_to "Destroy", piece_path(p), method: :delete, data: { confirm: "Are you sure?" } %><% else %><% end %><% end %></div>'
                 },
             <% end %>
         ]
@@ -226,14 +232,6 @@
                             }
                         });
                     });
-        
-                    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent(browserHasGeolocation ?
-                                        'Error: The Geolocation service failed.' :
-                                        'Error: Your browser doesn\'t support geolocation.');
-                    infoWindow.open(map);
-                        }
 
                     google.maps.event.addListener(map, "click", function(event) {
                         infowindow.close();

@@ -6,14 +6,15 @@ class UsersController < ApplicationController
 
     def edit
         @user = User.find(params[:id])
+        render :layout => "edit_layout"
     end
 
     def update
         @user = User.find(params[:id])
 
         if @user.update(avatar_params)
-            flash[:notice] = "Post updated successfully"
-            render "show"
+            flash[:notice] = "Avatar updated successfully"
+            redirect_to(@user)
         else
             render "show"
         end
