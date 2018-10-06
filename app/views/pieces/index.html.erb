@@ -43,7 +43,7 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 40.706684, lng: -73.923059},
-            zoom: 15
+            zoom: 17
         });
         infoWindow = new google.maps.InfoWindow;
 
@@ -256,7 +256,7 @@ function geocodeLatLng(geocoder, map, infowindow) {
     geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === 'OK') {
         if (results[0]) {
-            map.setZoom(11);
+            map.setZoom(17);
             var geoSetMarker = new google.maps.Marker({
             position: latlng,
             map: map
