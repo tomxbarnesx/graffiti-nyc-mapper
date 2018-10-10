@@ -35,3 +35,16 @@
     font-size: 12px;
 }
     
+
+@media (min-width: 992px) {
+    .about-card {
+        width: 50%;
+        font-size: 100%;
+        margin-top: 8em;
+        border-radius: 1em;
+    }
+
+    #about-view {
+        height: 60em;
+    }    
+}

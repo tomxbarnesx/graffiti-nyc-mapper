@@ -44,54 +44,6 @@ nav {
   }
 }
 
-@media (min-width: 992px) {
-  nav { 
-
-    .tag-logo {
-      width: 100%;
-    }
-
-    #add-button {
-      font-size: 110%;
-      margin-left: 2em;
-    }
-  
-    .navbar-toggler {
-      // height: 20%;
-    }
-  }
-
-  #address-input {
-    height: 2.5em;
-    border: 2px #343a40 solid;
-  }
-  
-  .gm-style-mtc div {
-    height: 2em !important;
-    border: 2px #343a40 solid;
-  }
-  
-}
-
-@media (min-width: 576px) {
-  #map {
-    height: 93em;
-  }
-  #the-view {
-    height: 120em;
-  }
-}
-
-@media (min-width: 992px) {
-  #map {
-    height: 46em;
-  }
-
-  #the-view {
-    height: 73em;
-  }
-}
-
 a.navbar-brand {
   padding: 0em;
 }
@@ -113,6 +65,11 @@ a.navbar-brand {
         text-decoration: none;
         color: rgba(255, 255, 255, 0.5);
     }
+}
+
+.modal-dialog {
+  font-size: 150% !important;
+  max-width: 780px !important;
 }
 
 
@@ -169,4 +126,57 @@ a.navbar-brand {
       transform: scaleY(1.0);
       -webkit-transform: scaleY(1.0);
     }
+  }
+
+  @media (min-width: 576px) {
+
+    #map {
+      height: 93em;
+    }
+    #the-view {
+      height: 120em;
+    }
+  }
+  
+  @media (min-width: 992px) {
+
+    .modal-dialog {
+      font-size: 100% !important;
+      max-width: 600px !important;
+    }
+
+    nav { 
+  
+      .tag-logo {
+        width: 100%;
+      }
+  
+      #add-button {
+        font-size: 110%;
+        margin-left: 2em;
+      }
+    
+      .navbar-toggler {
+        // height: 20%;
+      }
+    }
+  
+    #address-input {
+      height: 2.5em;
+      border: 2px #343a40 solid;
+    }
+    
+    .gm-style-mtc div {
+      height: 2em !important;
+      border: 2px #343a40 solid;
+    }
+  
+    #map {
+      height: 46em;
+    }
+  
+    #the-view {
+      height: 73em;
+    }
+    
   }
