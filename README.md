@@ -7,7 +7,7 @@ The Tag-NYC project is a dynamic maping application, dedicated to perserving and
 ![Screenshot of the profile view](Screen-Shot-2018-10-09-at-1.23.17-PM-1024x562.png)
 
 ## Features and Usage 
-Users can explore the maps and view the lightbox galleries within individual users' profiles. But in order add maps, they must sign up for their own account. If anyone wants to check out the edit and destroy functions of an already exsisting account use the below credentials:
+Users without an account can explore the maps and view the lightbox galleries within individual users' profiles. But in order add markers and images to the maps/galleries, they must sign up. If anyone wants to test the edit and destroy functions of an already exsisting account with use the below credentials in Heroku:
 
 **Login:** test@test.com
 **Password:** password
