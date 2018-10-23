@@ -1,24 +1,22 @@
-# README
+# TAG-NYC Graffiti Open Maps Project
+The Tag-NYC project is a dynamic maping application, dedicated to perserving and sharing New York City's thriving graffiti culture.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**Live Heroku Link:** https://warm-atoll-35950.herokuapp.com/
 
-Things you may want to cover:
+- **Login:** test@test.com
+- **Password:** password
 
-* Ruby version
+![Screenshot of the maps view](Screen-Shot-2018-10-09-at-1.23.04-PM-1024x562.png)
+![Screenshot of the profile view](Screen-Shot-2018-10-09-at-1.23.17-PM-1024x562.png)
 
-* System dependencies
+## Features and Usage 
+Users without an account can explore the maps and view the lightbox galleries within individual users' profiles. But in order add markers and images to the maps/galleries, they must sign up. If anyone wants to test the edit and destroy functions of an already exsisting account with use the credentials shared above in Heroku.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Built With
+- Ruby on Rails
+- ES6 Javascript
+- Google Maps Javascript API
+- Google Places API
+- Bootstrap
+- Amazon S3 Cloud Database Storage
+- PostgreSQL
