@@ -17,12 +17,27 @@
         <%= f.check_box :remember_me %>
         <%= f.label :remember_me %>
       </div>
-    <% end -%>
+    <% end %>
 
     <div class="form-group">
       <%= f.submit "Log in", class: "btn btn-dark" %>
     </div>
   <% end %>
-
+  <a href="#" tabindex="0" class="btn btn-dark w-2" role="button" data-toggle="popover">Sample Login Credentials</a>
+  <br>
   <%= render "devise/shared/links" %>
 </div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        placement : 'top',
+        html : true,
+        title : 'Sample Login <a href="#" class="close" data-dismiss="alert">&times;</a>',
+        content : '<p><strong>Email:</strong> test@test.com<br><strong>Password: </strong>password</p>'
+    });
+    $(document).on("click", ".popover .close" , function(){
+        $(this).parents(".popover").popover('hide');
+    });
+});
+</script>
