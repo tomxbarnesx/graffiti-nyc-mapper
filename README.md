@@ -1,5 +1,5 @@
 # TAG-NYC Graffiti Open Maps Project
-The Tag-NYC project is a dynamic maping application, dedicated to perserving and sharing New York City's thriving graffiti culture.
+The Tag-NYC project is a dynamic mapping application, dedicated to perserving and sharing snapshots of New York City's thriving graffiti culture.
 
 **Live Heroku Link:** https://warm-atoll-35950.herokuapp.com/
 
